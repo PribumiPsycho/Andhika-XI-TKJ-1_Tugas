@@ -14,20 +14,18 @@ def hitung_diskon(total_belanja):
     return diskon
 
 def main():
-    try:
-        total_belanja = float(input("Masukkan total belanjaan pelanggan: "))
-        if total_belanja < 0:
-            raise ValueError("Total belanjaan tidak boleh kurang dari 0.")
-        
-        diskon = hitung_diskon(total_belanja)
-        total_setelah_diskon = total_belanja - (total_belanja * diskon)
+    total_belanja = float(input("Masukkan total belanjaan pelanggan: "))
+    
+    diskon = hitung_diskon(total_belanja)
+    total_setelah_diskon = total_belanja - (total_belanja * diskon)
 
-        print(f"Total belanjaan: {total_belanja}")
+    print(f"Total belanjaan: {total_belanja}")
+    
+    if diskon > 0:
         print(f"Diskon: {diskon * 100}%")
         print(f"Total setelah diskon: {total_setelah_diskon}")
-
-    except ValueError as e:
-        print(f"Error: {e}")
+    else:
+        print("Tidak ada diskon.")
 
 if __name__ == "__main__":
     main()
