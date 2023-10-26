@@ -5,9 +5,9 @@
 
 def hitung_diskon(total_belanja):
     if total_belanja > 500000:
-        diskon = 0.1 * total_belanja
+        diskon = 0.1
     elif 300000 <= total_belanja <= 500000:
-        diskon = 0.05 * total_belanja
+        diskon = 0.05
     else:
         diskon = 0
     
@@ -15,23 +15,19 @@ def hitung_diskon(total_belanja):
 
 def main():
     try:
-        total_belanja = float(input("Masukkan total belanja pelanggan: "))
-        
+        total_belanja = float(input("Masukkan total belanjaan pelanggan: "))
         if total_belanja < 0:
-            print("Total belanja tidak boleh negatif.")
-            return
+            raise ValueError("Total belanjaan tidak boleh kurang dari 0.")
         
         diskon = hitung_diskon(total_belanja)
-        
-        if diskon > 0:
-            print(f"Diskon yang diberikan: Rp {diskon:,.2f}")
-            total_setelah_diskon = total_belanja - diskon
-            print(f"Total setelah diskon: Rp {total_setelah_diskon:,.2f}")
-        else:
-            print("Tidak ada diskon untuk total belanja di bawah Rp 300.000.")
+        total_setelah_diskon = total_belanja - (total_belanja * diskon)
 
-    except ValueError:
-        print("Masukkan tidak valid. Pastikan Anda memasukkan angka sebagai total belanja.")
+        print(f"Total belanjaan: {total_belanja}")
+        print(f"Diskon: {diskon * 100}%")
+        print(f"Total setelah diskon: {total_setelah_diskon}")
+
+    except ValueError as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
