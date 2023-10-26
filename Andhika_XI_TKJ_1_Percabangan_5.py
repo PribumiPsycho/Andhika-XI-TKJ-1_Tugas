@@ -1,4 +1,5 @@
 #nama: M ANDHIKA TANGGUH P
+
 #Kelas: XI TKJ 1
 #Absen: 17
 #Soal: Sebagai seorang guru, Anda harus menentukan nilai akhir siswa berdasarkan nilai tugas dan ujian.
