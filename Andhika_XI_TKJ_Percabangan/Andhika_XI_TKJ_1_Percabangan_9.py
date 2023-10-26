@@ -1,24 +1,19 @@
 #nama: M ANDHIKA TANGGUH P
 #Kelas: XI TKJ 1
 #Absen: 17
-#Soal: Sebagai seorang pustakawan, Anda perlu menentukan jenis pinjaman buku berdasarkan durasi peminjaman.
+#Soal:Sebagai seorang manajer proyek, Anda perlu menentukan apakah suatu proyek akan diluncurkan atau ditunda berdasarkan status persiapan.
 
-def tentukan_jenis_pinjaman(durasi_peminjaman):
-    if durasi_peminjaman <= 7:
-        jenis_pinjaman = "Peminjaman Pendek"
-    elif 7 < durasi_peminjaman <= 30:
-        jenis_pinjaman = "Peminjaman Menengah"
+def cek_status_persiapan(status_persiapan):
+    if status_persiapan == "Siap":
+        print("Proyek diluncurkan.")
+    elif status_persiapan == "Tunda":
+        print("Proyek ditunda.")
     else:
-        jenis_pinjaman = "Peminjaman Panjang"
-    return jenis_pinjaman
+        print("Status persiapan tidak valid.")
 
 def main():
-    durasi_peminjaman = int(input("Masukkan durasi peminjaman buku dalam hari: "))
-
-    jenis_pinjaman = tentukan_jenis_pinjaman(durasi_peminjaman)
-
-    print(f"Durasi Peminjaman: {durasi_peminjaman} hari")
-    print(f"Jenis Pinjaman: {jenis_pinjaman}")
+    status_persiapan = input("Masukkan status persiapan proyek (Siap/Tunda): ")
+    cek_status_persiapan(status_persiapan)
 
 if __name__ == "__main__":
     main()

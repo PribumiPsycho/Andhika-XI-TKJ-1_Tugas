@@ -1,27 +1,25 @@
 #nama: M ANDHIKA TANGGUH P
 #Kelas: XI TKJ 1
 #Absen: 17
-#Soal: Sebagai seorang pengembang perangkat lunak, Anda perlu membuat program sederhana yang menghitung bonus tahunan karyawan berdasarkan performa mereka.
+#Soal: Sebagai seorang pustakawan, Anda perlu menentukan jenis pinjaman buku berdasarkan durasi peminjaman.
 
-def hitung_bonus(performa, gaji_tahunan):
-    bonus = (
-        0.20 * gaji_tahunan if performa == 5 else
-        0.10 * gaji_tahunan if performa == 4 else
-        0.05 * gaji_tahunan if performa == 3 else
-        0.02 * gaji_tahunan if performa == 2 else
-        0  )
-    return bonus
+def tentukan_jenis_pinjaman(durasi):
+    if durasi <= 7:
+        jenis_pinjaman = "Peminjaman Pendek"
+    elif 7 < durasi <= 30:
+        jenis_pinjaman = "Peminjaman Menengah"
+    else:
+        jenis_pinjaman = "Peminjaman Panjang"
+    
+    return jenis_pinjaman
 
 def main():
-    performa = int(input("Masukkan nilai performa karyawan (1-5): "))
+    durasi_peminjaman = int(input("Masukkan durasi peminjaman buku (dalam hari): "))
+    
+    jenis_pinjaman = tentukan_jenis_pinjaman(durasi_peminjaman)
 
-    gaji_tahunan = float(input("Masukkan gaji tahunan karyawan: "))
-
-    bonus = hitung_bonus(performa, gaji_tahunan)
-
-    print(f"Performa karyawan: {performa}")
-    print(f"Gaji tahunan karyawan: {gaji_tahunan}")
-    print(f"Bonus tahunan: {bonus}")
+    print(f"Durasi Peminjaman: {durasi_peminjaman} hari")
+    print(f"Jenis Pinjaman: {jenis_pinjaman}")
 
 if __name__ == "__main__":
     main()
