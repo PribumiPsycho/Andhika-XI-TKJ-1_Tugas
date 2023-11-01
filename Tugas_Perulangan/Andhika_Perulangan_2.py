@@ -11,4 +11,4 @@ while jarak <= 10:
     pertambahan_jarak = 0.10 * jarak
     jarak += pertambahan_jarak
 
-print("Pelari dapat berlari lebih dari 10 kilometer setelah", minggu, "minggu.")
+print("Pelari berlari lebih dari 10 kilometer setelah", minggu, "minggu.")

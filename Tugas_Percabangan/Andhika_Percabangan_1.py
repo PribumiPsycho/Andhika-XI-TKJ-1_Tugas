@@ -3,19 +3,19 @@
 #Absen: 17
 #Soal: Deskripsi Pekerjaan: Di sebuah toko online, Anda bertanggung jawab untuk menghitung diskon berdasarkan jumlah total belanjaan pelanggan. 
 
-total_belanja = float(input("Masukkan total belanjaan pelanggan: "))
+belanja = float(input("Masukkan total belanjaan pelanggan: "))
 
-if total_belanja > 500000:
+if belanja > 500000:
     diskon = 0.1
 else:
-    if 300000 <= total_belanja <= 500000:
+    if 300000 <= belanja <= 500000:
         diskon = 0.05
     else:
         diskon = 0
 
-total_setelah_diskon = total_belanja - (total_belanja * diskon)
+total_setelah_diskon = belanja - (belanja * diskon)
 
-print(f"Total belanjaan: {total_belanja}")
+print(f"Total belanjaan: {belanja}")
 
 if diskon > 0:
     print(f"Diskon: {diskon * 100}%")

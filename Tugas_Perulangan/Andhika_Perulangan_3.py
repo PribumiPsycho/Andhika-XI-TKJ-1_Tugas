@@ -1,14 +1,14 @@
 #nama: M ANDHIKA TANGGUH P
 #Kelas: XI TKJ 1
 #Absen: 17
-#Soal: Seorang pedagang memiliki 100 buah apel. Setiap harinya, ia menjual 10% dari jumlah apel yang tersisa. Buatlah program yang menghitung berapa hari yang dibutuhkan agar sisa apel kurang dari 20 buah.
+#Soal: Sebuah investasi awal sebesar 10.000 dollar tumbuh sebesar 6% setiap tahunnya. Buatlah program yang menghitung berapa tahun yang dibutuhkan agar nilai investasi melebihi 20.000 dollar.
 
-jumlah_apel = 100
-hari = 0
+investasi = 10000
+tahun = 0
 
-while jumlah_apel >= 20:
-    hari += 1
-    penjualan = 0.10 * jumlah_apel
-    jumlah_apel -= penjualan
+while investasi <= 20000:
+    tahun += 1
+    pertumbuhan_investasi = 0.06 * investasi
+    investasi += pertumbuhan_investasi
 
-print("Dibutuhkan", hari, "hari agar sisa apel kurang dari 20 buah.")
+print("Dibutuhkan", tahun, "tahun agar nilai investasi melebihi 20,000 dollar.")
