@@ -5,7 +5,7 @@ class ScheduleApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Aplikasi Perjadwalan")
-        self.root.geometry("1920x1080")  # Set the window size to 1920 x 1080
+        self.root.geometry("1080x720")  # Set the window size to 1920 x 1080
 
         # Set the background color to black
         self.root.configure(bg='#000000')
@@ -14,31 +14,32 @@ class ScheduleApp:
         self.schedule_data = []
 
         # Create a label frame to hold all the elements with a pink border
-        frame = tk.LabelFrame(root, text="Aplikasi Perjadwalan", bg='#000000', fg='#FF34D2', bd=5, relief='solid', font=('Arial', 16))
+        frame = tk.LabelFrame(root, text="Aplikasi Perjadwalan", bg='#000000', fg='#FFFFFF', bd=5, relief='solid', font=('Arial', 16))
         frame.pack(side='right', padx=10, pady=10, fill='y')  # Align to the right and fill vertically
 
         # Label dan Entry untuk input acara
         label_frame_event = tk.Frame(frame, bg='#000000')
         label_frame_event.pack(pady=5, anchor='e')
 
-        self.label_event = tk.Label(label_frame_event, text="Acara:", bg='#000000', fg='#FF34D2', font=('Arial', 14), bd=0, highlightthickness=0)
+        self.label_event = tk.Label(label_frame_event, text="Acara:", bg='#000000', fg='#FFFFFF', font=('Arial', 14), bd=0, highlightthickness=0)
         self.label_event.pack()
 
         entry_frame_event = tk.Frame(frame, bg='#000000', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2)
         entry_frame_event.pack(pady=5, fill='x')
 
-        self.entry_event = tk.Entry(entry_frame_event, bg='#000000', fg='#FF34D2', insertbackground='#FF34D2', font=('Arial', 14))
+        self.entry_event = tk.Entry(entry_frame_event, bg='#000000', fg='#FFFFFF', insertbackground='#FF34D2', font=('Arial', 14))
         self.entry_event.pack(fill='x')
 
         # Label dan Entry untuk input tanggal
-        self.label_date = tk.Label(frame, text="Waktu :", bg='#000000', fg='#FF34D2', font=('Arial', 14))
+        self.label_date = tk.Label(frame, text="Waktu :", bg='#000000', fg='#FFFFFF', font=('Arial', 14))
         self.label_date.pack(pady=5, anchor='e')
+        
 
-        self.entry_date = tk.Entry(frame, bg='#000000', fg='#FF34D2', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
+        self.entry_date = tk.Entry(frame, bg='#000000', fg='#FFFFFF', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
         self.entry_date.pack(pady=5, fill='x')
 
         # Listbox untuk menampilkan jadwal
-        self.listbox_schedule = tk.Listbox(frame, bg='#000000', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
+        self.listbox_schedule = tk.Listbox(frame, bg='#000000',fg='#FFFFFF', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
         self.listbox_schedule.pack(pady=5, fill='both', expand=True)
 
         # Tombol-tombol untuk fungsi utama
@@ -51,7 +52,7 @@ class ScheduleApp:
         self.btn_view.pack(side='right', padx=10, pady=5)
 
         self.btn_edit = tk.Button(frame, text="Edit", command=self.edit_schedule, bg='#FF34D2', fg='#000000', font=button_font)
-        self.btn_edit.pack(side='left', padx=10, pady=5)
+        self.btn_edit.pack(side='right', padx=10, pady=5)
 
         self.btn_delete = tk.Button(frame, text="Delete", command=self.delete_schedule, bg='#FF34D2', fg='#000000', font=button_font)
         self.btn_delete.pack(side='right', padx=10, pady=5)
