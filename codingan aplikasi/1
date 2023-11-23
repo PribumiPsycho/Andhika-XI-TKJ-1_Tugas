@@ -11,15 +11,15 @@ class ScheduleApp:
 
         # Label dan Entry untuk input acara
         self.label_event = tk.Label(root, text="Acara:")
-        self.label_event.pack(pady=5)
+        self.label_event.pack(pady=10)
         self.entry_event = tk.Entry(root)
-        self.entry_event.pack(pady=5)
+        self.entry_event.pack(pady=10)
 
         # Label dan Entry untuk input tanggal
         self.label_date = tk.Label(root, text="Waktu (HH:MM dd mm yyyy):")
-        self.label_date.pack(pady=5)
+        self.label_date.pack(pady=2)
         self.entry_date = tk.Entry(root)
-        self.entry_date.pack(pady=5)
+        self.entry_date.pack(pady=2)
 
 
         # Tombol-tombol untuk fungsi utama

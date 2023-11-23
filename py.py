@@ -1,120 +1,150 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
-import sqlite3
-from datetime import datetime
+from tkinter import messagebox
 
-class SchedulingApp:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Aplikasi Penjadwalan")
+class ScheduleApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Aplikasi Perjadwalan")
+        self.root.geometry("1920x1080")  # Set the window size to 1920 x 1080
 
-        # Frame Utama
-        self.frame_utama = tk.Frame(master)
-        self.frame_utama.pack()
+        # Set the background color to black
+        self.root.configure(bg='#000000')
 
-        self.conn = sqlite3.connect('penjadwalan.db')
-        self.create_table()
+        # Variabel untuk menyimpan jadwal
+        self.schedule_data = []
 
-        self.label = tk.Label(self.frame_utama, text="Rencana Anda")
-        self.label.pack()
+        # Create a label frame to hold all the elements with a pink border
+        frame = tk.LabelFrame(root, text="Aplikasi Perjadwalan", bg='#000000', fg='#FF34D2', bd=5, relief='solid', font=('Arial', 16))
+        frame.pack(side='right', padx=10, pady=10, fill='y')  # Align to the right and fill vertically
 
-        self.listbox = tk.Listbox(self.frame_utama, width=50, height=10)
-        self.listbox.pack(pady=10)
+        # Label dan Entry untuk input acara
+        label_frame_event = tk.Frame(frame, bg='#000000')
+        label_frame_event.pack(pady=5, anchor='e')
 
-        # Frame Tombol
-        self.frame_tombol = tk.Frame(self.frame_utama)
-        self.frame_tombol.pack()
+        self.label_event = tk.Label(label_frame_event, text="Acara:", bg='#000000', fg='#FF34D2', font=('Arial', 14), bd=0, highlightthickness=0)
+        self.label_event.pack()
 
-        self.button_info = tk.Button(self.frame_tombol, text="Info Rencana", command=self.info_rencana)
-        self.button_info.pack(side=tk.LEFT, padx=5)
+        entry_frame_event = tk.Frame(frame, bg='#000000', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2)
+        entry_frame_event.pack(pady=5, fill='x')
 
-        self.button_tambah = tk.Button(self.frame_tombol, text="Tambah Rencana", command=self.tambah_rencana)
-        self.button_tambah.pack(side=tk.LEFT, padx=5)
+        self.entry_event = tk.Entry(entry_frame_event, bg='#000000', fg='#FF34D2', insertbackground='#FF34D2', font=('Arial', 14))
+        self.entry_event.pack(fill='x')
 
-        self.button_edit = tk.Button(self.frame_tombol, text="Edit Rencana", command=self.edit_rencana)
-        self.button_edit.pack(side=tk.LEFT, padx=5)
+        # Label dan Entry untuk input tanggal
+        self.label_date = tk.Label(frame, text="Waktu :", bg='#000000', fg='#FF34D2', font=('Arial', 14))
+        self.label_date.pack(pady=5, anchor='e')
 
-        self.button_hapus = tk.Button(self.frame_tombol, text="Hapus Rencana", command=self.hapus_rencana)
-        self.button_hapus.pack(side=tk.LEFT, padx=5)
+        self.entry_date = tk.Entry(frame, bg='#000000', fg='#FF34D2', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
+        self.entry_date.pack(pady=5, fill='x')
 
-        self.update_listbox()
+        # Listbox untuk menampilkan jadwal
+        self.listbox_schedule = tk.Listbox(frame, bg='#000000', highlightbackground='#FF34D2', highlightcolor='#FF34D2', highlightthickness=2, font=('Arial', 14))
+        self.listbox_schedule.pack(pady=5, fill='both', expand=True)
 
-    def create_table(self):
-        cursor = self.conn.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS rencana 
-                          (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                           judul TEXT, 
-                           waktu TEXT)''')
-        self.conn.commit()
+        # Tombol-tombol untuk fungsi utama
+        button_font = ('Arial', 14)
 
-    def update_listbox(self):
-        self.listbox.delete(0, tk.END)
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM rencana")
-        rencana_list = cursor.fetchall()
-        for rencana in rencana_list:
-            self.listbox.insert(tk.END, f"{rencana[1]} - {rencana[2]}")
+        self.btn_add = tk.Button(frame, text="Add", command=self.add_schedule, bg='#FF34D2', fg='#000000', font=button_font)
+        self.btn_add.pack(side='right', padx=10, pady=5)
 
-    def info_rencana(self):
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            cursor = self.conn.cursor()
-            cursor.execute("SELECT * FROM rencana")
-            rencana_list = cursor.fetchall()
-            info_rencana = f"Judul: {rencana_list[selected_index[0]][1]}\nWaktu: {rencana_list[selected_index[0]][2]}"
-            messagebox.showinfo("Info Rencana", info_rencana)
+        self.btn_view = tk.Button(frame, text="View", command=self.view_schedule, bg='#FF34D2', fg='#000000', font=button_font)
+        self.btn_view.pack(side='right', padx=10, pady=5)
+
+        self.btn_edit = tk.Button(frame, text="Edit", command=self.edit_schedule, bg='#FF34D2', fg='#000000', font=button_font)
+        self.btn_edit.pack(side='left', padx=10, pady=5)
+
+        self.btn_delete = tk.Button(frame, text="Delete", command=self.delete_schedule, bg='#FF34D2', fg='#000000', font=button_font)
+        self.btn_delete.pack(side='right', padx=10, pady=5)
+
+
+    def add_schedule(self):
+        event = self.entry_event.get()
+        date = self.entry_date.get()
+
+        if event and date:
+            schedule_text = f"Acara: {event}, Tanggal: {date}"
+            self.schedule_data.append(schedule_text)
+            self.listbox_schedule.insert(tk.END, schedule_text)
+            self.clear_entries()
         else:
-            messagebox.showwarning("Peringatan", "Pilih rencana terlebih dahulu!")
+            messagebox.showwarning("Peringatan", "Isi semua kolom!")
 
-    def tambah_rencana(self):
-        judul_rencana = simpledialog.askstring("Tambah Rencana", "Masukkan judul rencana:")
-        waktu_rencana = simpledialog.askstring("Tambah Rencana", "Masukkan waktu rencana (Format: YYYY-MM-DD HH:MM):")
-
-        try:
-            datetime.strptime(waktu_rencana, "%Y-%m-%d %H:%M")
-        except ValueError:
-            messagebox.showerror("Error", "Format waktu tidak valid. Gunakan format YYYY-MM-DD HH:MM")
-            return
-
-        cursor = self.conn.cursor()
-        cursor.execute("INSERT INTO rencana (judul, waktu) VALUES (?, ?)", (judul_rencana, waktu_rencana))
-        self.conn.commit()
-        self.update_listbox()
-
-    def edit_rencana(self):
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            judul_lama, waktu_lama = self.listbox.get(selected_index)
-            judul_baru = simpledialog.askstring("Edit Rencana", "Edit judul rencana:", initialvalue=judul_lama)
-            waktu_baru = simpledialog.askstring("Edit Rencana", "Edit waktu rencana (Format: YYYY-MM-DD HH:MM):", initialvalue=waktu_lama)
-
-            try:
-                datetime.strptime(waktu_baru, "%Y-%m-%d %H:%M")
-            except ValueError:
-                messagebox.showerror("Error", "Format waktu tidak valid. Gunakan format YYYY-MM-DD HH:MM")
-                return
-
-            cursor = self.conn.cursor()
-            cursor.execute("UPDATE rencana SET judul=?, waktu=? WHERE judul=? AND waktu=?", (judul_baru, waktu_baru, judul_lama, waktu_lama))
-            self.conn.commit()
-            self.update_listbox()
+    def view_schedule(self):
+        if not self.schedule_data:
+            messagebox.showinfo("Info", "Tidak ada jadwal yang tersimpan.")
         else:
-            messagebox.showwarning("Peringatan", "Pilih rencana terlebih dahulu!")
+            schedule_text = "\n".join(self.schedule_data)
+            messagebox.showinfo("Jadwal", schedule_text)
 
-    def hapus_rencana(self):
-        selected_index = self.listbox.curselection()
+    def edit_schedule(self):
+        selected_index = self.listbox_schedule.curselection()
+
         if selected_index:
-            judul_lama, waktu_lama = self.listbox.get(selected_index)
-            konfirmasi = messagebox.askyesno("Konfirmasi", "Apakah Anda yakin ingin menghapus rencana '{judul_lama} - {waktu_lama}'?")
-            if konfirmasi:
-                cursor = self.conn.cursor()
-                cursor.execute("DELETE FROM rencana WHERE judul=? AND waktu=?", (judul_lama, waktu_lama))
-                self.conn.commit()
-                self.update_listbox()
+            selected_index = selected_index[0]
+            event, date = self.extract_data(self.schedule_data[selected_index])
+
+            # Tampilkan jendela untuk mengedit jadwal
+            edit_window = tk.Toplevel(self.root)
+            edit_window.title("Edit Jadwal")
+
+            # Label dan Entry untuk input acara
+            label_edit_event = tk.Label(edit_window, text="Acara:")
+            label_edit_event.pack(pady=5)
+            entry_edit_event = tk.Entry(edit_window)
+            entry_edit_event.insert(0, event)
+            entry_edit_event.pack(pady=5)
+
+            # Label dan Entry untuk input tanggal
+            label_edit_date = tk.Label(edit_window, text="Tanggal (dd/mm/yyyy):")
+            label_edit_date.pack(pady=5)
+            entry_edit_date = tk.Entry(edit_window)
+            entry_edit_date.insert(0, date)
+            entry_edit_date.pack(pady=5)
+
+            # Tombol untuk menyimpan perubahan
+            btn_save_changes = tk.Button(edit_window, text="Simpan Perubahan", command=lambda: self.save_changes(selected_index, entry_edit_event.get(), entry_edit_date.get(), edit_window))
+            btn_save_changes.pack(pady=10)
+
         else:
-            messagebox.showwarning("Peringatan", "Pilih rencana terlebih dahulu!")
+            messagebox.showwarning("Peringatan", "Pilih jadwal yang ingin diubah.")
+
+    def save_changes(self, index, new_event, new_date, edit_window):
+        if new_event and new_date:
+            new_schedule_text = f"Acara: {new_event}, Tanggal: {new_date}"
+            self.schedule_data[index] = new_schedule_text
+            self.listbox_schedule.delete(index)
+            self.listbox_schedule.insert(index, new_schedule_text)
+            edit_window.destroy()
+            self.clear_entries()
+        else:
+            messagebox.showwarning("Peringatan", "Isi semua kolom!")
+
+    def delete_schedule(self):
+        selected_index = self.listbox_schedule.curselection()
+
+        if selected_index:
+            confirm = messagebox.askyesno("Konfirmasi", "Anda yakin ingin menghapus jadwal ini?")
+            if confirm:
+                selected_index = selected_index[0]
+                self.listbox_schedule.delete(selected_index)
+                del self.schedule_data[selected_index]
+                self.clear_entries()
+        else:
+            messagebox.showwarning("Peringatan", "Pilih jadwal yang ingin dihapus.")
+
+    def extract_data(self, schedule_text):
+        parts = schedule_text.split(", ")
+        event = parts[0].split(": ")[1]
+        date = parts[1].split(": ")[1]
+        return event, date
+
+    def clear_entries(self):
+        self.entry_event.delete(0, tk.END)
+        self.entry_date.delete(0, tk.END)
+
+    # Rest of your code remains the same...
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = SchedulingApp(root)
+    app = ScheduleApp(root)
     root.mainloop()

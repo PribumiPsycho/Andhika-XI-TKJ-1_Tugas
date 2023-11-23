@@ -1,0 +1,43 @@
+import tkinter as tk
+from tkinter import ttk
+import calendar
+
+class AplikasiKalender:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Aplikasi Kalender")
+        self.root.geometry("400x400")
+
+        # Pilih tahun dan bulan
+        self.label_tahun = tk.Label(root, text="Tahun:")
+        self.label_tahun.grid(row=0, column=0, pady=5, padx=10)
+        self.combobox_tahun = ttk.Combobox(root, values=list(range(2020, 2031)))
+        self.combobox_tahun.set(2020)  # Default tahun
+        self.combobox_tahun.grid(row=0, column=1, pady=5)
+
+        self.label_bulan = tk.Label(root, text="Bulan:")
+        self.label_bulan.grid(row=0, column=2, pady=5)
+        self.combobox_bulan = ttk.Combobox(root, values=list(range(1, 13)))
+        self.combobox_bulan.set(1)  # Default bulan
+        self.combobox_bulan.grid(row=0, column=3, pady=5)
+
+        # Tombol untuk menampilkan kalender
+        self.btn_tampilkan = tk.Button(root, text="Tampilkan Kalender", command=self.tampilkan_kalender)
+        self.btn_tampilkan.grid(row=0, column=4, pady=5, padx=10)
+
+        # Widget untuk menampilkan kalender
+        self.kalender_text = tk.Text(root, height=15, width=35)
+        self.kalender_text.grid(row=1, column=0, columnspan=5, pady=10, padx=10)
+
+    def tampilkan_kalender(self):
+        tahun = int(self.combobox_tahun.get())
+        bulan = int(self.combobox_bulan.get())
+
+        cal_text = calendar.month(tahun, bulan)
+        self.kalender_text.delete(1.0, tk.END)
+        self.kalender_text.insert(tk.END, cal_text)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = AplikasiKalender(root)
+    root.mainloop()
